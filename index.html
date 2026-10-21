@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Oakhaven Studio</title>
+    <link rel="stylesheet" href="public/style.css">
+    <link rel="icon" href="assets/logo/images/logo-circle.svg">
+</head>
+
+<body>
+    <canvas id="bg-particles"></canvas>
+
+    <header class="header">
+        <div class="container header-inner">
+            <a class="brand" href="#home" aria-label="Oakhaven Studio home">
+                <div class="brand-mark">
+                    <img style="padding: 0.25rem; opacity: 0.75;" class="logo-img"
+                        src="assets/logo/images/Oakhaven Studio Logo (tree).svg" alt="Oakhaven Studio logo">
+                </div>
+                <span style="display: flex; gap: 0.5rem;">
+                    <h2 style="color: #1e3327;">OAKHAVEN</h2>
+                    <h2 style="color: #42403b;">STUDIO</h2>
+                </span>
+            </a>
+            <nav class="nav" aria-label="Primary navigation">
+                <a href="#home">Home</a>
+                <a href="#models">Models</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+        <div class="glassmorphism header-glassmorphism "></div>
+    </header>
+
+    <main class="container">
+        <section class="hero" id="home">
+            <article class="card hero-main">
+                <p class="eyebrow">Home</p>
+                <h1>Empowering Every Creator with High-Quality, Affordable Assets</h1>
+                <p class="lead">
+                    Oakhaven Studio is a independent development brand offering a collection of high-quality 3D models
+                    for Unity. The studio's goal is to provide affordable assets that don’t compromise on
+                    quality—perfect for freelance developers and hobbyists looking to make their projects stand out.
+                    <br><br>
+                    Oakhaven Studio creates versatile 3D models designed to fit a wide range of game styles. Whether
+                    building a fantasy world or crafting a futuristic sci-fi universe, developers will find flexible,
+                    easy-to-use resources with no restrictive single theme.
+                    <br><br>
+                    By keeping costs accessible, Oakhaven Studio ensures great assets are within reach for creators at
+                    every level. Developers are encouraged to check back regularly for new releases and to reach out
+                    whenever support is needed.
+                </p>
+                <div class="glassmorphism"></div>
+            </article>
+
+            <aside class="side">
+                <article class="card mini">
+                    <div class="section-title">
+                        <h2>Home</h2>
+                        <p>Quick overview of the store and its focus.</p>
+                    </div>
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="stat-label">Focus</span>
+                            <div class="stat-value">Unity 3D assets</div>
+                            <div class="stat-desc">Flexible models for different game worlds and art styles.</div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Approach</span>
+                            <div class="stat-value">Affordable</div>
+                            <div class="stat-desc">Low-cost assets without cutting the quality that matters.</div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Support</span>
+                            <div class="stat-value">Friendly help</div>
+                            <div class="stat-desc">Reach out anytime for questions, feedback, or inquiries.</div>
+                        </div>
+                    </div>
+                    <div class="glassmorphism"></div>
+                </article>
+            </aside>
+        </section>
+
+        <section class="card section" id="models">
+            <div class="section-head">
+                <div>
+                    <h2>3D Models</h2>
+                    <p class="note" id="results-count">Showing all assets</p>
+                </div>
+                <div class="search-container">
+                    <div class="search-wrapper">
+                        <input type="text" id="asset-search" placeholder="Search assets...">
+                    </div>
+                </div>
+            </div>
+
+            <div id="no-results" class="no-results" style="display: none;">
+                No models found matching your search.
+            </div>
+
+            <div class="models">
+                <article class="model-card">
+                    <div class="preview">
+                        <div class="preview-slider">
+                            <img class="active" alt="Preview 1"
+                                src="assets/models/plates-bowls-cups/images/plates-bowls-cups.png" />
+                            <img alt="Preview 2"
+                                src="assets/models/plates-bowls-cups/demo-files/Screenshot 2025-03-05 174052.png" />
+                            <img alt="Preview 3"
+                                src="assets/models/plates-bowls-cups/demo-files/Screenshot 2025-03-05 174104.png" />
+                            <img alt="Preview 4"
+                                src="assets/models/plates-bowls-cups/demo-files/Screenshot 2025-03-05 174113.png" />
+                            <img alt="Preview 5"
+                                src="assets/models/plates-bowls-cups/demo-files/Screenshot 2025-03-05 174156.png" />
+
+                        </div>
+                    </div>
+                    <h3>Plates Bowls and Cups</h3>
+                    <p>
+                        A variety of tableware models featuring 8 plates, 8 bowls, and 5 cups—a total of 21 assets
+                        (23 meshes). Perfect for enhancing kitchen and interior scenes in your projects.
+                    </p>
+                    <div class="btn-row">
+                        <a class="btn primary open-asset-store" href="https://assetstore.unity.com/packages/slug/312159"
+                            target="_blank" rel="noopener">View on Asset Store</a>
+                    </div>
+                </article>
+
+                <article class="model-card">
+                    <div class="preview">
+                        <div class="preview-slider">
+                            <img class="active" alt="Preview 1"
+                                src="assets/models/piano-and-stool/images/branded-piano-landscape.png" />
+                            <img alt="Preview 2"
+                                src="assets/models/piano-and-stool/demo-files/Screenshot 2025-03-23 110754.png" />
+                        </div>
+                    </div>
+                    <h3>Piano and Stool</h3>
+                    <p>
+                        A wooden piano and leather stool—a total of 2 assets (216 meshes). Perfect for adding realism
+                        and elegance to your digital scenes.
+                    </p>
+                    <div class="btn-row">
+                        <a class="btn primary open-asset-store" href="https://assetstore.unity.com/packages/slug/313446"
+                            target="_blank" rel="noopener">View on Asset Store</a>
+                    </div>
+                </article>
+            </div>
+            <div class="glassmorphism"></div>
+        </section>
+
+        <section class="card section" id="contact">
+            <div class="section-head">
+                <div>
+                    <h2>Contact Me</h2>
+                    <p class="note">I'd love to hear from you!</p>
+                </div>
+            </div>
+
+            <div class="contact">
+                <p class="note" style="margin-bottom: 1.5rem;">If you have any questions or feedback, feel free to reach
+                    out.
+                </p>
+
+                <a href="mailto:oakhavenstudio.official+support@gmail.com" class="email-pill">
+                    <span class="email-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="16" x="2" y="4" rx="2" />
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                        </svg>
+                    </span>
+                    <span class="email-address">oakhavenstudio.official+support@gmail.com</span>
+                </a>
+            </div>
+            <div class="glassmorphism"></div>
+        </section>
+
+        <p class="footer">© <span id="year">2026</span> Oakhaven Studio. All Rights Reserved.</p>
+    </main>
+
+    <script src="public/script.js"></script>
+
+</html>
