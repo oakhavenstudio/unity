@@ -191,7 +191,7 @@
 
     // Initialize canvas settings and event listeners
     function init() {
-        canvas = document.getElementById('bg-particles');
+        canvas = document.getElementById('canvas');
         if (!canvas) return;
         ctx = canvas.getContext('2d');
         resize();
@@ -283,56 +283,38 @@
                 const clampX = Math.max(-halfW + cornerRadius, Math.min(posX, halfW - cornerRadius));
                 const clampY = Math.max(-halfH + cornerRadius, Math.min(posY, halfH - cornerRadius));
 
-                let dx = posX - clampX;
-                let dy = posY - clampY;
-                let mag = Math.sqrt(dx * dx + dy * dy);
+                const dx = posX - clampX;
+                const dy = posY - clampY;
+                const mag = Math.sqrt(dx * dx + dy * dy) || 1;
+                const distToEdge = mag - cornerRadius;
 
-                if (mag === 0) {
-                    const distToLeft = posX - (-halfW);
-                    const distToRight = halfW - posX;
-                    const distToTop = posY - (-halfH);
-                    const distToBottom = halfH - posY;
-                    const minDst = Math.min(distToLeft, distToRight, distToTop, distToBottom);
-
-                    if (minDst === distToLeft) { dx = -1; dy = 0; }
-                    else if (minDst === distToRight) { dx = 1; dy = 0; }
-                    else if (minDst === distToTop) { dx = 0; dy = -1; }
-                    else { dx = 0; dy = 1; }
-                    mag = 1;
-                }
-
-                const distToEdge = mag - cornerRadius + 5;
-
-                if (distToEdge < 160) {
+                if (distToEdge < 150) {
                     this.isNearMagnet = true;
-                    this.isExploding = false;
+                    this.isExploding = true;
                     this.lastDx = dx;
                     this.lastDy = dy;
 
-                    const attractionForce = 2.5;
-                    const pullDirection = distToEdge < 0 ? 1 : -1;
-                    this.x += (dx / mag) * Math.min(Math.abs(distToEdge), 40) * attractionForce * deltaTime * pullDirection;
-                    this.y += (dy / mag) * Math.min(Math.abs(distToEdge), 40) * attractionForce * deltaTime * pullDirection;
+                    // 1. INCREASED SUCKING FORCE: Needs to be higher to overcome deltaTime
+                    const attractionForce = 5.0;
+                    this.x -= (dx / mag) * distToEdge * attractionForce * deltaTime;
+                    this.y -= (dy / mag) * distToEdge * attractionForce * deltaTime;
 
-                    const orbitSpeed = (this.baseSpeed * 15) * deltaTime;
+                    // 2. STABILIZED ORBIT: Use a much higher base and ensure deltaTime applies to all branches
+                    const orbitSpeed = (Math.random() * (15 - 5) * 5 + (this.baseSpeed * 10)) * deltaTime;
                     const margin = 5;
 
-                    if (posY <= -halfH + margin && posX < halfW - cornerRadius) {
-                        this.x += orbitSpeed;
-                    } else if (posX >= halfW - margin && posY < halfH - cornerRadius) {
-                        this.y += orbitSpeed;
-                    } else if (posY >= halfH - margin && posX > -halfW + cornerRadius) {
-                        this.x -= orbitSpeed;
-                    } else if (posX <= -halfW + margin && posY > -halfH + cornerRadius) {
-                        this.y -= orbitSpeed;
-                    } else {
+                    if (posY <= -halfH + margin && posX < halfW - cornerRadius) this.x += orbitSpeed;
+                    else if (posX >= halfW - margin && posY < halfH - cornerRadius) this.y += orbitSpeed;
+                    else if (posY >= halfH - margin && posX > -halfW + cornerRadius) this.x -= orbitSpeed;
+                    else if (posX <= -halfW + margin && posY > -halfH + cornerRadius) this.y -= orbitSpeed;
+                    else {
                         this.x += (posY > 0 ? -orbitSpeed : orbitSpeed);
                         this.y += (posX > 0 ? orbitSpeed : -orbitSpeed);
                     }
 
-                    const proximityGlow = Math.max(0, 1 - Math.abs(distToEdge) / 15);
-                    this.displaySize = this.size * (1.0 + proximityGlow * 1.5);
-                    this.displayOpacity = Math.min(this.opacity + 0.3 + proximityGlow, 0.85);
+                    const proximityGlow = Math.max(0, 1 - Math.abs(distToEdge) / 30);
+                    this.displaySize = this.size * (1.2 + proximityGlow * 2);
+                    this.displayOpacity = Math.min(this.displayOpacity + 0.1, 0.8);
 
                     this.vx = 0;
                     this.vy = 0;
@@ -341,32 +323,38 @@
                 }
             } else if (this.isExploding) {
                 if (this.vx === 0 && this.vy === 0) {
-                    let angle = (typeof this.lastDx === 'number' && typeof this.lastDy === 'number' && (this.lastDx !== 0 || this.lastDy !== 0))
+                    let angle = (this.lastDx !== 0 || this.lastDy !== 0)
                         ? Math.atan2(this.lastDy, this.lastDx)
                         : Math.random() * Math.PI * 2;
 
                     const finalAngle = angle + (Math.random() - 0.5) * 0.8;
-                    const speed = (Math.random() * 250 + 100);
+                    const speed = (Math.random() * (500 - 200) + 200);
 
                     this.vx = Math.cos(finalAngle) * speed;
                     this.vy = Math.sin(finalAngle) * speed;
-                    this.shouldReset = Math.random() > 0.4;
+                    this.shouldReset = Math.random() > 1;
                 }
 
+                // Apply physics with deltaTime
                 this.x += this.vx * deltaTime;
-                this.vy += 800 * deltaTime;
+                // Gravity needs to be significantly higher when using deltaTime
+                const GRAVITY_PULL = 10;
+                this.vy += GRAVITY_PULL * deltaTime;
                 this.y += this.vy * deltaTime;
 
-                const friction = Math.pow(0.95, deltaTime * 60);
+                // Friction: Pow is the mathematically correct way to handle deltaTime friction
+                const friction = Math.pow(0.96, deltaTime * 60);
                 this.vx *= friction;
                 this.vy *= friction;
-                this.displayOpacity *= Math.pow(0.92, deltaTime * 60);
+                this.displayOpacity *= Math.pow(0.95, deltaTime * 60); // Fade faster
 
-                if (this.displayOpacity < 0.02) {
+                if (this.displayOpacity < 0.01) {
                     this.isExploding = false;
                     if (this.shouldReset) {
                         this.reset();
                     } else {
+                        const downwardForce = 100.0;
+                        this.direction = Math.atan2(this.vy + downwardForce, this.vx);
                         this.vx = 0;
                         this.vy = 0;
                     }
