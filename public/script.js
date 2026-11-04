@@ -13,18 +13,18 @@
 
     let activeMagnet = null;
 
-    const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || "143, 185, 150";
+    const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb').trim() || '143, 185, 150';
 
     // Dynamic Scroll Handling
-    const navLinks = document.querySelectorAll(".header-inner .nav a, .header-inner .brand");
+    const navLinks = document.querySelectorAll('.header-inner .nav a, .header-inner .brand');
 
     // Email Handling
-    const emailPill = document.querySelector(".email-pill");
+    const emailPill = document.querySelector('.email-pill');
     if (emailPill) {
         emailPill.addEventListener("click", (e) => {
             e.preventDefault();
-            const recipient = "kharnyx3@gmail.com";
-            const subject = "Inquiry regarding Unity Assets";
+            const recipient = emailPill.dataset.email;
+            const subject = 'Inquiry regarding Unity assets';
             window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}`;
         });
     }
